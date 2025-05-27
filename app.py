@@ -28,6 +28,11 @@ def list_sports():
     url = f"{ODDS_BASE_URL}/sports/?apiKey={ODDS_API_KEY}"
     response = requests.get(url)
 
+    # Log quota usage headers
+    print("Quota Info:")
+    print("Requests Remaining:", response.headers.get("x-requests-remaining"))
+    print("Requests Used:", response.headers.get("x-requests-used"))
+
     if response.status_code == 200:
         return jsonify(response.json())
     else:
