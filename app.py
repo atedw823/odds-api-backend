@@ -7,7 +7,7 @@ app = Flask(__name__)
 ODDS_API_KEY = os.getenv("ODDS_API_KEY", "YOUR_API_KEY")
 ODDS_BASE_URL = "https://api.the-odds-api.com/v4"
 
-@app.route("/get-odds", methods=["GET"])
+@app.route("/api/odds", methods=["GET"])
 def get_odds():
     sport_key = request.args.get("sport", "basketball_nba")
     region = request.args.get("region", "us")
