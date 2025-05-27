@@ -18,9 +18,15 @@ def get_odds():
     url = f"{ODDS_BASE_URL}/sports/{sport_key}/odds/?apiKey={ODDS_API_KEY}&regions={region}&markets={market}&oddsFormat={odds_format}"
     response = requests.get(url)
 
+    # Log quota info
+    print("Quota Info (GET /api/odds):")
+    print("Requests Remaining:", response.headers.get("x-requests-remaining"))
+    print("Requests Used:", response.headers.get("x-requests-used"))
+
     if response.status_code == 200:
         return jsonify(response.json())
     else:
+        print("API Error:", response.status_code, response.text)
         return jsonify({"error": response.text}), response.status_code
 
 @app.route("/list-sports", methods=["GET"])
@@ -28,14 +34,15 @@ def list_sports():
     url = f"{ODDS_BASE_URL}/sports/?apiKey={ODDS_API_KEY}"
     response = requests.get(url)
 
-    # Log quota usage headers
-    print("Quota Info:")
+    # Log quota info
+    print("Quota Info (GET /list-sports):")
     print("Requests Remaining:", response.headers.get("x-requests-remaining"))
     print("Requests Used:", response.headers.get("x-requests-used"))
 
     if response.status_code == 200:
         return jsonify(response.json())
     else:
+        print("API Error:", response.status_code, response.text)
         return jsonify({"error": response.text}), response.status_code
 
 if __name__ == "__main__":
